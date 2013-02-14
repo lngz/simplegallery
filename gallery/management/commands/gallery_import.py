@@ -17,8 +17,11 @@ class Command(NoArgsCommand):
         For convenience, creates an author if one with this name doesn't exist.
         """
         # TODO: make sure that this method doesn't add repeated authors
-        author = Author(name=author_name)
-        author.save()
+        try:
+            author = Author.objects.get(name=author_name)
+        except :
+            author = Author(name=author_name)
+            author.save()
         return author
 
     def parse_datetime(self, text):
